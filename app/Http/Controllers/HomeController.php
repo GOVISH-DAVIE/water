@@ -48,6 +48,7 @@ class HomeController extends Controller
     }
     public function add(Request $request)
     { 
+        // return $_POST['date'];
         Entry::create([
             'firstEntry' => $request->input('previous'),
             'firstEntryimg' => $this->upload('previousim', $request),
@@ -57,12 +58,13 @@ class HomeController extends Controller
             'cpu' => $request->input('cpu'),
             'received' => $request->input('received'),
             'expected' => intval($request->input('cpu')) * (intval($request->input('current')) - intval($request->input('previous'))),
+            'dateref'=>$request->input('date')
         ]);
         redirect('/entry');
     }
     public function show()
     {
        $e = Entry::all();
-       return $e;
+       return view('show')->with('data', $e);
     }
 }

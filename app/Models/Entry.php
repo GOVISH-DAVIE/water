@@ -17,5 +17,6 @@ class Entry extends Model
         'cpu',
         'received',
         'expected',
+        'dateref'
     ];
 }
