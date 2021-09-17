@@ -39,15 +39,17 @@ class HomeController extends Controller
 
                 $fileNameToStore = Str::random(10) . '_' . time() . '.' . $extension;
 
+                // $path = $request->file($r)->storeAs('storage', $fileNameToStore);
+                
                 $path = $request->file($r)->storeAs('public', $fileNameToStore);
-                return $path;
+                return $fileNameToStore;
             }
         } else {
             return false;
         }
     }
     public function add(Request $request)
-    { 
+    {
         // return $_POST['date'];
         Entry::create([
             'firstEntry' => $request->input('previous'),
@@ -58,13 +60,13 @@ class HomeController extends Controller
             'cpu' => $request->input('cpu'),
             'received' => $request->input('received'),
             'expected' => intval($request->input('cpu')) * (intval($request->input('current')) - intval($request->input('previous'))),
-            'dateref'=>$request->input('date')
+            'dateref' => $request->input('date')
         ]);
-        redirect('/entry');
+        return  redirect('/entry');
     }
     public function show()
     {
-       $e = Entry::all();
-       return view('show')->with('data', $e);
+        $e = Entry::all();
+        return view('show')->with('data', $e);
     }
 }
